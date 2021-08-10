@@ -11,26 +11,16 @@
         </style>
     </head> 
     <script>
-        // let colorChange = () => {
-        //         this.strokeStyle = 'black'
-        //         }
-        // const touchFunction = function() {
-
-        // for ( var i = this.touches.length - 1, touch; i >= 0; i-- ) {
-
-        // touch = this.touches[i];
-
-        // this.lineCap = 'round';
-        // this.lineJoin = 'round';
-        // this.fillStyle = this.strokeStyle = "#D8EBA7";
-        // this.lineWidth = radius;
-
-        // this.beginPath();
-        // this.moveTo( touch.ox, touch.oy );
-        // this.lineTo( touch.x, touch.y );
-        // this.stroke();
+       function generateRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
     </script>
-    <body onclick="document.body.style.backgroundColor='#A7EBCA'" >
+    <body onclick="document.body.style.backgroundColor = generateRandomColor() ">
         </script>
         <div id="container"></div>
         <header class="info">
@@ -39,8 +29,8 @@
         <!-------------- SKETCH CANVAS ------------->
         <script>
 
-        var COLOURS = [ '#E3EB64', '#A7EBCA', '#FFFFFF', '#D8EBA7', '#868E80' ];
-        var radius = 0;
+        const COLOURS = [ '#E3EB64', '#A7EBCA', '#FFFFFF', '#D8EBA7', '#868E80' ];
+        let radius = 0;
 
         Sketch.create({
 
@@ -69,13 +59,24 @@
             touchmove: function() {
 
                 for ( var i = this.touches.length - 1, touch; i >= 0; i-- ) {
-
+    
                     touch = this.touches[i];
 
                     this.lineCap = 'round';
                     this.lineJoin = 'round';
-                    this.fillStyle = this.strokeStyle = "#D8EBA7";
+                    console.log(this.touches)
+                    console.log(i)
+                    this.fillStyle = [ i % COLOURS.length ];
+                    this.strokeStyle = [ i % COLOURS.length ];
                     this.lineWidth = radius;
+
+                    let container = document.getElementById('container')
+                    
+                    container.addEventListener('dblclick', {
+                    handleEvent: function (event) {
+                    console.log(this.strokeStyle)
+                    this.strokeStyle = '#A7EBCA'              
+                    }});
 
                     this.beginPath();
                     this.moveTo( touch.ox, touch.oy );
